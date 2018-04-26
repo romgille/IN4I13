@@ -4,7 +4,7 @@ DEPS=$(wildcard libs/*.c)
 OBJ=$(wildcard obj/*.o)
 LINKS=-lpthread
 
-all: tdm1 tdm2 tdm3
+all: tdm1 tdm2 tdm3 tdm4
 
 tdm1: tdm1_test1c tdm1_test2a
 

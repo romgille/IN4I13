@@ -5,15 +5,12 @@
 static sem_t s1;
 static sem_t s2;
 static sem_t s3;
-static sem_t mutex;
 
 void* fnct1() {
     int i;
     for (i = 0; i < 10; ++i) {
         sem_wait(&s1);
-        sem_wait(&mutex);
         printf("Affichage %d du thread %d\n", i + 1, 1);
-        sem_post(&mutex);
         sem_post(&s2);
     }
 
@@ -25,9 +22,7 @@ void* fnct2() {
     int i;
     for (i = 0; i < 10; ++i) {
         sem_wait(&s2);
-        sem_wait(&mutex);
         printf("Affichage %d du thread %d\n", i + 1, 2);
-        sem_post(&mutex);
         sem_post(&s3);
     }
 
@@ -39,9 +34,7 @@ void* fnct3() {
     int i;
     for (i = 0; i < 10; ++i) {
         sem_wait(&s3);
-        sem_wait(&mutex);
         printf("Affichage %d du thread %d\n", i + 1, 3);
-        sem_post(&mutex);
         sem_post(&s1);
     }
 
@@ -56,7 +49,6 @@ int main() {
     sem_init(&s1, 0, 1);
     sem_init(&s2, 0, 0);
     sem_init(&s3, 0, 0);
-    sem_init(&mutex, 0, 1);
 
     if (pthread_create(&thread1, NULL, fnct1, (void*) NULL)) {
         perror("ERROR creating thread1.");
