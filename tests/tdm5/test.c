@@ -9,18 +9,13 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 
+#include "../../libs/shared_memory.h"
+
 #define MAX_FILE 5
 #define MAX_RAND 10
 #define SHM_NAME "/os_esiee-tdm5"
 #define SEM1 "sem1"
 #define SEM2 "sem2"
-
-struct shared_memory {
-    int fd;
-    int* buffer;
-    sem_t* s_read;
-    sem_t* s_write;
-};
 
 int init(struct shared_memory* memory) {
     if ((memory->fd = shm_open(SHM_NAME, O_CREAT | O_RDWR, 0644)) == -1) {
