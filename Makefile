@@ -2,9 +2,9 @@ CC=gcc
 CFLAGS=-Wall -ansi -pedantic
 DEPS=$(wildcard libs/*.c)
 OBJ=$(wildcard obj/*.o)
-LINKS=-lpthread
+LINKS=-lpthread -lrt
 
-all: tdm1 tdm2 tdm3 tdm4
+all: tdm1 tdm2 tdm3 tdm4 tdm5
 
 tdm1: tdm1_test1c tdm1_test2a
 
@@ -52,6 +52,11 @@ tdm4_testIB: build_deps
 
 tdm4_testIIB: build_deps
 	$(CC) $(OBJ) tests/tdm4/testIIB.c $(CFLAGS) $(LINKS) -o $@.o
+
+tdm5: tdm5_test
+
+tdm5_test: build_deps
+	$(CC) $(OBJ) tests/tdm5/test.c $(CFLAGS) $(LINKS) -o $@.o
 
 build_deps:
 	$(CC) $(CFLAGS) -c $(DEPS) && mv *.o obj
